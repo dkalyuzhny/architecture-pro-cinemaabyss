@@ -271,3 +271,11 @@ npm run test:docker
 - Branch
 - Commit
 - Push
+
+## Работа с ветками Git
+
+Это изменение выполнено в отдельной ветке
+feature/readme-update.
+
+Цель — научиться создавать Pull Request
+и объединять изменения с основной веткой cinema.
