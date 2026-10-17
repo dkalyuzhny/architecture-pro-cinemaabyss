@@ -20,7 +20,11 @@ public sealed class MigrationFlag
     public bool UseMovies()
     {
         var snapshot = Volatile.Read(ref current);
-        return snapshot.Enabled && Random.Shared.Next(100) < snapshot.MoviesPercent;
+
+        if (!snapshot.Enabled)
+            return true;
+
+        return Random.Shared.Next(100) < snapshot.MoviesPercent;
     }
 
     private Settings Read()
