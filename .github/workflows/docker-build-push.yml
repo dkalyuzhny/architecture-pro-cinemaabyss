@@ -5,8 +5,8 @@ on:
   push:
     branches: [main, cinema]
     paths:
-      - "src/**"
-      - ".github/workflows/docker-build-push.yml"
+      - 'src/**'
+      - '.github/workflows/docker-build-push.yml'
   release:
     types: [published]
 

@@ -8,12 +8,12 @@ metadata:
     app: zookeeper
 spec:
   ports:
-    - port: 2181
-      name: client
-    - port: 2888
-      name: server
-    - port: 3888
-      name: leader-election
+  - port: 2181
+    name: client
+  - port: 2888
+    name: server
+  - port: 3888
+    name: leader-election
   selector:
     app: zookeeper
 ---
@@ -83,9 +83,9 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 15
       volumes:
-        - name: zookeeper-data
-          persistentVolumeClaim:
-            claimName: zookeeper-data
+      - name: zookeeper-data
+        persistentVolumeClaim:
+          claimName: zookeeper-data
 ---
 apiVersion: v1
 kind: Service
@@ -96,8 +96,8 @@ metadata:
     app: kafka
 spec:
   ports:
-    - port: 9092
-      name: kafka
+  - port: 9092
+    name: kafka
   selector:
     app: kafka
 ---
@@ -175,6 +175,6 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 20
       volumes:
-        - name: kafka-data
-          persistentVolumeClaim:
-            claimName: kafka-data
+      - name: kafka-data
+        persistentVolumeClaim:
+          claimName: kafka-data

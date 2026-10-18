@@ -259,23 +259,3 @@ npm run test:docker
 2. Протестируйте постепенный переход, изменив переменную окружения MOVIES_MIGRATION_PERCENT в файле docker-compose.yml.
 
 3. Проверьте топики Kafka и сообщения через Kafka UI по адресу http://localhost:8090
-
-## Изучение Git
-
-Этот раздел создан для практического изучения Git
-в Visual Studio Code.
-
-### Освоенные операции
-
-- Clone
-- Branch
-- Commit
-- Push
-
-## Работа с ветками Git
-
-Это изменение выполнено в отдельной ветке
-feature/readme-update.
-
-Цель — научиться создавать Pull Request
-и объединять изменения с основной веткой cinema.
