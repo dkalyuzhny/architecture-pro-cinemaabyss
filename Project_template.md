@@ -353,7 +353,7 @@ https://cinemaabyss.example.com/api/movies
 
 ![Статус Helm](Screenshots/Screenshot%20helm%20status.png)
 ![Тесты Helm](Screenshots/Screenshot%20tests%20helm.png)
-
+![Вызов CinemaAbyss](Screenshots/Screenshot%20call%20cinemaabyss.png)
 
 # Задание 5
 Компания планирует активно развиваться и для повышения надежности, безопасности, реализации сетевых паттернов типа Circuit Breaker и канареечного деплоя вам как архитектору необходимо развернуть istio и настроить circuit breaker для monolith и movies сервисов.
