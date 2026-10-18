@@ -1,0 +1,83 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_LEFT_RIGHT()
+
+title Кинобездна — целевая архитектура (C4 Containers)
+
+Person(customer, "Пользователь", "Смотрит каталог, управляет подпиской, оценивает фильмы")
+Person(admin, "Администратор", "Управляет каталогом")
+
+System_Boundary(cinema, "Кинобездна") {
+
+  Container(gateway, "API Gateway", "HTTP Reverse Proxy", "Единая точка входа, авторизация запросов, маршрутизация, ограничения нагрузки")
+
+  Container(users, "Users service", "C#, REST API", "Пользователи и профили")
+
+  Container(movies, "Movies service", "Go, REST API", "Каталог фильмов и жанры")
+
+  Container(subs, "Subscriptions service", "C#, REST API", "Тарифы, подписки и права доступа")
+
+  Container(payments, "Payments service", "C#, REST API", "Платежи и их статусы")
+
+  Container(views, "Views service", "C#, REST API", "История и прогресс просмотра")
+
+  Container(ratings, "Ratings service", "C#, REST API", "Оценки и отзывы пользователей")
+
+  ContainerDb(usersDb, "Users DB", "PostgreSQL", "Данные пользователей")
+  ContainerDb(moviesDb, "Movies DB", "PostgreSQL", "Фильмы и жанры")
+  ContainerDb(subsDb, "Subscriptions DB", "PostgreSQL", "Тарифы и подписки")
+  ContainerDb(payDb, "Payments DB", "PostgreSQL", "Транзакции и статусы")
+  ContainerDb(viewsDb, "Views DB", "PostgreSQL", "История просмотров")
+  ContainerDb(ratingsDb, "Ratings DB", "PostgreSQL", "Оценки и отзывы")
+
+  Container(events, "Events service", "C#, ASP.NET Core, Kafka client", "HTTP API событий User/Payment/Movie; публикация и чтение сообщений с записью в лог")
+
+  ContainerQueue(kafka, "Kafka", "Apache Kafka", "Хранение и асинхронная передача событий")
+
+  Container(monolith, "Monolith", "Go", "Функциональность, ещё не перенесённая в сервисы")
+}
+
+System_Ext(paymentProvider, "Платёжный провайдер", "Внешняя обработка платежей")
+
+Rel(customer, gateway, "Использует", "HTTPS/JSON")
+Rel(admin, gateway, "Управляет каталогом", "HTTPS/JSON")
+
+Rel(gateway, users, "Перенаправляет", "REST")
+Rel(gateway, movies, "Movies: при GRADUAL_MIGRATION=true — MOVIES_MIGRATION_PERCENT% трафика; при false — 100%", "REST")
+Rel(gateway, subs, "Перенаправляет", "REST")
+Rel(gateway, payments, "Перенаправляет", "REST")
+Rel(gateway, views, "Перенаправляет", "REST")
+Rel(gateway, ratings, "Перенаправляет", "REST")
+Rel(gateway, monolith, "Movies: при GRADUAL_MIGRATION=true — оставшаяся доля трафика; остальные невыделенные домены — всегда", "REST")
+Rel(gateway, events, "Создаёт события User/Payment/Movie", "REST")
+Rel(events, kafka, "Публикует в user-events, payment-events, movie-events", "Kafka")
+Rel(kafka, events, "Читает сообщения из user-events, payment-events, movie-events", "Kafka")
+
+Rel(users, usersDb, "Читает и записывает", "SQL")
+Rel(movies, moviesDb, "Читает и записывает", "SQL")
+Rel(monolith, moviesDb, "Читает и записывает", "SQL")
+Rel(subs, subsDb, "Читает и записывает", "SQL")
+Rel(payments, payDb, "Читает и записывает", "SQL")
+Rel(views, viewsDb, "Читает и записывает", "SQL")
+Rel(ratings, ratingsDb, "Читает и записывает", "SQL")
+
+Rel(subs, payments, "Создаёт платёж", "REST")
+Rel(payments, paymentProvider, "Обрабатывает платёж", "HTTPS")
+Rel(payments, kafka, "PaymentCompleted", "Kafka")
+Rel(kafka, subs, "PaymentCompleted", "Kafka")
+
+Rel(subs, kafka, "SubscriptionActivated", "Kafka")
+Rel(kafka, views, "SubscriptionActivated", "Kafka")
+
+Rel(views, subs, "Проверяет право доступа", "REST")
+Rel(views, kafka, "ViewCompleted", "Kafka")
+Rel(kafka, ratings, "ViewCompleted", "Kafka")
+
+Rel(ratings, movies, "Проверяет фильм", "REST")
+Rel(ratings, kafka, "RatingCreated", "Kafka")
+Rel(kafka, movies, "RatingCreated", "Kafka")
+
+SHOW_LEGEND()
+@enduml
