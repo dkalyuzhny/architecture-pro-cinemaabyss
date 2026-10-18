@@ -352,7 +352,7 @@ https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
 ![Статус Helm](Screenshots/Screenshot%20helm%20status.png)
-![Статус Helm](Screenshots/Screenshot%20helm%20status.png)
+![Тесты Helm](Screenshots/Screenshot%20tests%20helm.png)
 
 
 # Задание 5
