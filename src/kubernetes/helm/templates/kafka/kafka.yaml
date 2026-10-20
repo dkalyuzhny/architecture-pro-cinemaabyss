@@ -80,7 +80,7 @@ spec:
           value: {{ .Values.zookeeper.jvmFlags | quote }}
         volumeMounts:
         - name: zookeeper-data
-          mountPath: /var/lib/zookeeper/data
+          mountPath: /opt/zookeeper-3.4.13/data
         readinessProbe:
           tcpSocket:
             port: 2181
