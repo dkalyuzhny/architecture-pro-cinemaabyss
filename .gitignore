@@ -154,3 +154,17 @@ go.work
 
 # Postman tests reports
 tests/postman/reports/
+
+**/obj/
+
+# IDE
+.vs/
+.vscode/
+
+# Local settings and secrets
+.env
+.env.*
+
+# README files
+**/README.md
+**/readme.md

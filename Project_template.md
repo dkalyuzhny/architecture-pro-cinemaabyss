@@ -5,8 +5,7 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
-
+[Диаграмма контейнеров C4 — КиноБездна](C4%20Containers%20-%20CinemaAbyss.puml)
 
 ## Задание 2
 
@@ -58,7 +57,8 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090 
-
+![Тесты Kafka](Screenshots/Screenshot%20tests%20Kafka.png)
+![Топики Kafka](Screenshots/Screenshot%203%20Topics%20Kafka.png)
 
 ## Задание 3
 
@@ -270,10 +270,12 @@ cat .docker/config.json | base64
   ```
   Часть тестов с health-чек упадет, но создание событий отработает.
   Откройте логи event-service и сделайте скриншот обработки событий
+  
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
-
+![Вызов CinemaAbyss](Screenshots/Screenshot%20call%20cinemaabyss.png)
+![Тесты Events service](Screenshots/Screenshot%20tests%20Event-service.png)
 
 ## Задание 4
 Для простоты дальнейшего обновления и развертывания вам как архитектуру необходимо так же реализовать helm-чарты для прокси-сервиса и проверить работу 
@@ -349,6 +351,9 @@ minikube tunnel
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
+![Статус Helm](Screenshots/Screenshot%20helm%20status.png)
+![Тесты Helm](Screenshots/Screenshot%20tests%20helm.png)
+![Вызов CinemaAbyss](Screenshots/Screenshot%20call%20cinemaabyss.png)
 
 # Задание 5
 Компания планирует активно развиваться и для повышения надежности, безопасности, реализации сетевых паттернов типа Circuit Breaker и канареечного деплоя вам как архитектору необходимо развернуть istio и настроить circuit breaker для monolith и movies сервисов.
@@ -414,6 +419,9 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+![Статистика Circuit Breaker](Screenshots/Screenshot%20Circuit-breaker%20stats.png)
+![Проверка Circuit Breaker для монолита](Screenshots/Screenshot%20Circuit-breaker%20Monolith.png)
+![Проверка Circuit Breaker для Movies](Screenshots/Screenshot%20Circuit-breaker%20Movies.png)
 
 Удаляем все
 ```bash
